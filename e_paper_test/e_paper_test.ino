@@ -1,29 +1,33 @@
+/*******************************************************************
+Spotify parts:
+    Written by Brian Lough
+    YouTube: https://www.youtube.com/brianlough
+    Tindie: https://www.tindie.com/stores/brianlough/
+    Twitter: https://twitter.com/witnessmenow
+
+Other code by Heikki Hietala and respective part websites
+ *******************************************************************/
+
+// ----------------------------
+// Standard Libraries
+// ----------------------------
+
+
 #include <GxEPD.h>
-#include <GxGDEH029A1/GxGDEH029A1.h>      // 2.9" b/w
+//#include <GxGDEH029A1/GxGDEH029A1.h>      // 2.9" b/w
+#include <GxGDEW075T8/GxGDEW075T8.h>      // 7.5" b/w
+//#include <GxGDEW075T7/GxGDEW075T7.h>      // 7.5" b/w 800x480
+
 #include <GxIO/GxIO_SPI/GxIO_SPI.h>
 #include <GxIO/GxIO.h>
 
-#include <Fonts/FreeMonoBold9pt7b.h> 
+//fonts
+#include <Fonts/FreeMonoBold9pt7b.h>
 #include <Fonts/FreeMonoBold12pt7b.h>
 #include <Fonts/FreeMonoBold18pt7b.h>
-#include <Fonts/FreeMonoBold24pt7b.h>// this font is referred to below with the name maxfontmono1
+#include <Fonts/FreeMonoBold24pt7b.h>
 
-#include <Fonts/FreeSans9pt7b.h>
-#include <Fonts/FreeSans12pt7b.h>
-#include <Fonts/FreeSans18pt7b.h>
-#include <Fonts/FreeSans24pt7b.h>
-
-#include <Fonts/FreeSansBold9pt7b.h>
-#include <Fonts/FreeSansBold12pt7b.h>
-#include <Fonts/FreeSansBold18pt7b.h>
-#include <Fonts/FreeSansBold24pt7b.h>
-
-#include <Fonts/FreeSansBoldOblique9pt7b.h>
-#include <Fonts/FreeSansBoldOblique12pt7b.h>
-#include <Fonts/FreeSansBoldOblique18pt7b.h>
-#include <Fonts/FreeSansBoldOblique24pt7b.h>
-
-const char* maxfontmono1 = "FreeMonoBold24pt7b"; // << see? maxfontmono1
+const char* maxfontmono1 = "FreeMonoBold24pt7b";
 const GFXfont* maxfmono = &FreeMonoBold24pt7b;
 const char* midfontmono2 = "FreeMonoBold18pt7b";
 const GFXfont* midfmono = &FreeMonoBold18pt7b;
@@ -32,39 +36,73 @@ const GFXfont* smallfmono = &FreeMonoBold12pt7b;
 const char* tinyfontmono4 = "FreeMonoBold9pt7b";
 const GFXfont* tinyfmono = &FreeMonoBold9pt7b;
 
-const char* maxfontsans1 = "FreeSans24pt7b";
-const GFXfont* maxfsans = &FreeSans24pt7b;
-const char* midfontsans2 = "FreeSans18pt7b";
-const GFXfont* midfsans = &FreeSans18pt7b;
-const char* smallfontsans3 = "FreeSans12pt7b";
-const GFXfont* smallfsans = &FreeSans12pt7b;
-const char* tinyfontsans4 = "FreeSans9pt7b";
-const GFXfont* tinyfsans = &FreeSans9pt7b;
+//ottaa kuvan mukaan
+//#include "img_01.h"
 
-const char* maxfontsansbold1 = "FreeSansBold24pt7b";
-const GFXfont* maxfsansbold = &FreeSansBold24pt7b;
-const char* midfontsansbold2 = "FreeSansBold18pt7b";
-const GFXfont* midfsansbold = &FreeSansBold18pt7b;
-const char* smallfontsansbold3 = "FreeSansBold12pt7b";
-const GFXfont* smallfsansbold = &FreeSansBold12pt7b;
-const char* tinyfontsansbold4 = "FreeSansBold9pt7b";
-const GFXfont* tinyfsansbold = &FreeSansBold9pt7b;
+// constructor for AVR Arduino, copy from GxEPD_Example else
+GxIO_Class io(SPI, /*CS=*/ SS, /*DC=*/ 17, /*RST=*/ 16); // arbitrary selection of 8, 9 selected for default of GxEPD_Class
+GxEPD_Class display(io, /*RST=*/ 16, /*BUSY=*/ 4); // default selection of (9), 7
 
-const char* maxfontsansboldOblique1 = "FreeSansBoldOblique24pt7b";
-const GFXfont* maxfsansboldOblique = &FreeSansBoldOblique24pt7b;
-const char* midfontsansboldOblique2 = "FreeSansBoldOblique18pt7b";
-const GFXfont* midfsansboldOblique = &FreeSansBoldOblique18pt7b;
-const char* smallfontsansboldOblique3 = "FreeSansBoldOblique12pt7b";
-const GFXfont* smallfsansboldOblique = &FreeSansBoldOblique12pt7b;
-const char* tinyfontsansboldOblique4 = "FreeSansBoldOblique9pt7b";
-const GFXfont* tinyfsansboldOblique = &FreeSansBoldOblique9pt7b;
 
-void setup() {
-  // put your setup code here, to run once:
+
+
+void setup()
+{
+  /******************************* START EPAPER SETUP ***************************************/
+  display.init();
+  display.setRotation(0);
+  display.fillScreen(GxEPD_WHITE);
+  display.setTextColor(GxEPD_BLACK);
+  display.setFont(smallfmono);
+/************************************ END EPAPER SETUP ****************************/
+  display.setCursor(30, 30);
+  display.println("YAY ^^");
+  display.println();
+  display.setCursor(60, 70);
+  display.setFont(smallfmono);
+  display.println("Yattaaa!!!!");
+  display.setCursor(60, 90);
+  //print_face(); saa piirrettyä naaman
+  //display.update();
+  
+   //uint16_t x = (display.width() - 64) / 2;
+  //uint16_t y = 5;
+  //display.drawExampleBitmap(gImage_img_01, x, y, 64, 180, GxEPD_BLACK);
+//  display.drawBitmap(0, 0, img_01.h, 250, 122, EPD_BLACK);
+  //display.update();
+
+  display.drawExampleBitmap(img_01, x, y, 64, 180, GxEPD_BLACK);
+  display.update();
+  
+  Serial.begin(115200);
+
+
 
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
 
+void loop()
+{
+
+}
+
+void print_face() {
+  display.println(
+  ".------\ /------.\n"
+   "|       -       |\n"
+   "|               |\n"
+   "|               |\n"
+   "|               |\n"
+"_______________________\n"
+"===========.===========\n"
+  "/ ~~~~~     ~~~~~ \\\n"
+ "/|     |     |\\\n"
+" W   ---  / \\  ---   W\n"
+ "\\      |o o|      /\n"
+  "|                 |\n"
+  "\\    #########    /\n"
+   "\\  ## ----- ##  /\n"
+    "\\##         ##/\n"
+     "\\_____v_____/\n"
+  );
 }
