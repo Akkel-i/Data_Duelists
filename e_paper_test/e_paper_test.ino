@@ -37,7 +37,8 @@ const char* tinyfontmono4 = "FreeMonoBold9pt7b";
 const GFXfont* tinyfmono = &FreeMonoBold9pt7b;
 
 //ottaa kuvan mukaan
-//#include "img_01.h"
+#include "img_01.h" toimii
+//#include "testi.h"
 
 // constructor for AVR Arduino, copy from GxEPD_Example else
 GxIO_Class io(SPI, /*CS=*/ SS, /*DC=*/ 17, /*RST=*/ 16); // arbitrary selection of 8, 9 selected for default of GxEPD_Class
@@ -64,16 +65,17 @@ void setup()
   display.setCursor(60, 90);
   //print_face(); saa piirrettyä naaman
   //display.update();
-  
-   //uint16_t x = (display.width() - 64) / 2;
-  //uint16_t y = 5;
-  //display.drawExampleBitmap(gImage_img_01, x, y, 64, 180, GxEPD_BLACK);
-//  display.drawBitmap(0, 0, img_01.h, 250, 122, EPD_BLACK);
-  //display.update();
 
-  display.drawExampleBitmap(img_01, x, y, 64, 180, GxEPD_BLACK);
+
+  //display.drawExampleBitmap(gImage_IMG_0001, 100, 100, 64, 180, GxEPD_BLACK); TOIMII
+  //display.update(); 
+
+/*
+  display.drawExampleBitmap(gImage_testi.h, 0, 0, 64, 180, GxEPD_BLACK);
   display.update();
+  */
   
+   
   Serial.begin(115200);
 
 
