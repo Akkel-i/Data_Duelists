@@ -1,0 +1,241 @@
+/*
+ * liitäntäkaaviot: https://esp32io.com/tutorials/esp32-rfid-nfc
+ */
+
+#include <SPI.h>
+
+#include <EEPROM.h>
+#include <string>
+
+#define SS_PIN  5  // ESP32 pin GPIO5 
+#define RST_PIN 27 // ESP32 pin GPIO27 
+#define EEPROM_SIZE 1024
+
+String Scanned_value_NFC;
+String NFC1;
+String NFC2;
+String convertedNFC1;
+String convertedNFC2;
+int arrayNFC1[4];
+int arrayNFC2[4];
+bool playersCreated = false;
+
+
+
+void setup() {
+  Serial.begin(9600);
+  SPI.begin(); // init SPI bus
+
+  
+  // initialize EEPROM with predefined size
+  EEPROM.begin(EEPROM_SIZE);
+
+  Serial.println("Tap an RFID/NFC tag on the RFID-RC522 reader");
+}
+
+
+
+// hahmon luonti
+class CreatePlayer {
+public:
+  // Constructor to initialize the variables
+  CreatePlayer(String nameValue, int strValue, int defValue, int agiValue, int conValue, int winValue, int lossValue) {
+    name = nameValue;
+    str = strValue;
+    def = defValue;
+    agi = agiValue;
+    con = conValue;
+    wins = winValue;
+    losses = lossValue;
+  }
+    String getName() {
+    return name;
+  }
+  int getStr() {
+    return str;
+  }
+  int getDef() {
+    return def;
+  }
+  int getAgi() {
+    return agi;
+  }
+  int getCon() {
+    return con;
+  }
+  int getWins() {
+    return wins;
+  }
+  int getLosses() {
+    return losses;
+  }
+    void addWins() {
+    wins++;
+  }
+  void addLosses() {
+    losses++;
+  }
+private:
+  String name;
+  int str;
+  int def;
+  int agi;
+  int con;
+  int wins;
+  int losses;
+};
+
+
+
+void loop() { 
+  NFC1 = "af529376";
+  NFC2 = "528aef57";
+
+
+
+  Serial.println("NFC1 arvo on: " + NFC1);
+  Serial.println("NFC2 arvo on: " + NFC2);
+  Serial.println();
+
+  // testiä vaa toimiiks toi UID arvon muutos numeroihin
+    if (NFC1.length() != 0 && NFC2.length() != 0) {
+      Serial.println("funktio mikä muuttaa UID meidän arvoiksi: ");
+        convertedNFC1 = convertUID(NFC1);
+        convertedNFC2 = convertUID(NFC2);
+        Serial.println(convertedNFC1 + " " + convertedNFC2);
+        Serial.println();
+    }
+
+  /* testiä toimiiko muistiin tallentaminen ja lukeminen (pitäis toimii, ainakin simuloiden)
+   *  if (NFC1.length() != 0) {
+   * saveToMemory(NFC1);
+   * }
+   * Serial.println("Muistista luettu arvo on: ");
+   * Serial.println(getFromMemory());
+   */
+
+  //tekee UID numero-arvoista array(4) jossa statsit 0-9 arvoilla
+    createStats(convertedNFC1, arrayNFC1);
+    createStats(convertedNFC2, arrayNFC2);
+
+/*     näillä voi käydä läpi arrayn sisällöt
+    for (int i = 0; i < 4; i++) {
+    Serial.print("Result[" + String(i) + "]: ");
+    Serial.println(arrayNFC1[i]);
+    }
+    for (int i = 0; i < 4; i++) {
+        Serial.print("Result[" + String(i) + "]: ");
+        Serial.println(arrayNFC2[i]);
+    } */
+
+
+
+
+
+
+  // str, def, agi, con, voitot, häviöt. Tällä kutsulla tekee  (array kutsut pitäisi toimia ihan oikein, simulaatiossa)
+  //CreatePlayer player1("Jonas", 10, 42, 10, 5, 0, 0 );
+  CreatePlayer player1("Jonas", arrayNFC1[0], arrayNFC1[1], arrayNFC1[2], arrayNFC1[3], 0, 0 );
+  //CreatePlayer player2("Aku", 10, 42, 10, 5, 0, 0 );
+  CreatePlayer player2("Aku", arrayNFC2[0], arrayNFC2[1], arrayNFC2[2], arrayNFC2[3], 0, 0 );
+
+    // statseja haetaan komennolla: player1.getDef()
+    Serial.println("hahmot luotu ja ");
+    Serial.println("player1 deffa on: " +  String(player1.getDef()) + " ja player2 constitution on: " +  String(player2.getCon()) + " Pelaajan1 nimi on: " + player1.getName());
+  
+  if (NFC1.length() != 0 && NFC2.length() != 0) {
+    int hp1 = player1.getCon();
+    int hp2 = player2.getCon();
+    int atk1 = player1.getStr() - player2.getDef();
+    int atk2 = player2.getStr() - player1.getDef();
+  //Serial.print(player1.getStr() - player2.getDef());
+  while (hp1 > 0 || hp2 > 0) {
+    hp2 = atk1 - hp2;
+    hp1 = atk2 - hp1;
+    if (hp1 <= 0) {
+    Serial.print("player2 win");
+    }
+    else if  (hp2 <= 0) {
+    Serial.print("player1 win");
+    };
+
+
+  }
+
+  }
+  
+  delay(2000); // odottaa 2 sekuntia
+};
+
+
+
+
+
+
+
+
+// FUNKTIOT ALHAALLA
+
+
+
+
+
+
+
+/*  convertUID() käytetään näin:
+    String NFC1 = "fa167765";
+    String converted = convertUID(NFC1); */
+// muuttaa 0-9 a-f joksikin numeroksi
+String convertUID(const String& uid) {
+    String result = "";
+
+    for (int i = 0; i < uid.length(); i++) {
+        char c = uid[i];
+        int value = 0;
+
+        if (c >= '0' && c <= '9') {
+            value = c - '0';
+        } else if (c >= 'a' && c <= 'f') {
+            value = c - 'a' + 10;
+        } else {
+            // Handle invalid characters here (if needed)
+            // For now, we'll set the value to 0 for any invalid character
+        }
+        value = constrain(value, 0, 9);
+        Serial.println(value);
+        result += String(value);
+    }
+
+    return result;
+}
+
+// päivittää NFC:n numerot arrayhin jota voi käyttää sitten statseihin. Laita sisään string UID ja array johon haluat tulokset päivittyvät
+void createStats(const String& input, int resultArray[4]) {
+    // Make sure the input length is even to group numbers in pairs
+    if (input.length() % 2 == 0) {
+        for (int i = 0; i < input.length(); i += 2) {
+            String numberPair = input.substring(i, i + 2);
+            int num1 = numberPair.substring(0, 1).toInt();
+            int num2 = numberPair.substring(1).toInt();
+            resultArray[i / 2] = num1 + num2;
+        }
+    } else {
+        // Handle the case when the input length is not even (if needed)
+        // You can set the resultArray to an error state here if required
+    }
+}
+
+
+// tallentaa esp32 muistiin muuttujan, pitäis pystyy tallentaa myös array, eli sit vaa laittaa array sisään
+void saveToMemory(String toBeSaved) {
+  EEPROM.put(0, toBeSaved);
+  EEPROM.commit();
+};
+
+// hakee esp32 muistista arvon, jos haluut käyttää niin muista loop
+String getFromMemory() {
+  String savedThing;
+  EEPROM.get(0, savedThing);
+  return savedThing;
+};
+
