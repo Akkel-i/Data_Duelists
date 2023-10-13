@@ -37,7 +37,7 @@ const char* tinyfontmono4 = "FreeMonoBold9pt7b";
 const GFXfont* tinyfmono = &FreeMonoBold9pt7b;
 
 //ottaa kuvan mukaan
-#include "img_01.h" toimii
+//#include "img_01.h" toimii
 //#include "testi.h"
 
 // constructor for AVR Arduino, copy from GxEPD_Example else
@@ -64,7 +64,13 @@ void setup()
   display.println("Yattaaa!!!!");
   display.setCursor(60, 90);
   //print_face(); saa piirrettyä naaman
-  //display.update();
+
+  display.setCursor(140, 200);
+  display.setFont(maxfmono);
+  display.println("DATA DUELIST");
+  
+  
+
 
 
   //display.drawExampleBitmap(gImage_IMG_0001, 100, 100, 64, 180, GxEPD_BLACK); TOIMII
@@ -78,7 +84,8 @@ void setup()
    
   Serial.begin(115200);
 
-
+//muista aina update muuten ei piirrä näyttöön :D
+  display.update();
 
 }
 
