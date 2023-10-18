@@ -148,10 +148,36 @@ void loop() {
     int hp2 = player2.getCon();
     int atk1 = player1.getStr() - player2.getDef();
     int atk2 = player2.getStr() - player1.getDef();
+
   //Serial.print(player1.getStr() - player2.getDef());
   while (hp1 > 0 || hp2 > 0) {
-    hp2 = atk1 - hp2;
-    hp1 = atk2 - hp1;
+
+    //kattoo onko jommankumman critti true, eli tekee crit dmg, ja joka kierros kattoo uudelleen.
+    bool crit1 = random(0,19) > player1.getAgi();
+    bool crit2 = random(0,19) > player2.getAgi();
+
+    // ykköspelaajan hyökkäys crit tai ilman
+    if (crit1 == true) {
+        hp2 = (atk1 * 1.5) - hp2;
+        Serial.println("pelaaja 1 crittas!")
+    } else if (crit2 == false) {
+      hp2 = atk1 - hp2;
+        Serial.println("pelaaja 1 normi hyökkäys!")
+    }
+
+    // kakkospelaajan hyökkäys crit tai ilman
+    if (crit2 == true) {
+        hp1 = (atk2 * 1.5) - hp1;
+            Serial.println("pelaaja 2 crittas!")
+    } else if (crit2 == false) {
+      hp1 = atk2 - hp1;
+            Serial.println("pelaaja 2 normi hyökkäys!")
+    }  
+
+    Serial.println("pelaajan 1 hp on: " + hp1)
+    Serial.println("pelaajan 2 hp on: " + hp2)
+
+
     if (hp1 <= 0) {
     Serial.print("player2 win");
     }
