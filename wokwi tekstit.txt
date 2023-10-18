@@ -144,17 +144,22 @@ void loop() {
     Serial.println("player1 deffa on: " +  String(player1.getDef()) + " ja player2 constitution on: " +  String(player2.getCon()) + " Pelaajan1 nimi on: " + player1.getName());
   
   if (NFC1.length() != 0 && NFC2.length() != 0) {
-    int hp1 = player1.getCon();
-    int hp2 = player2.getCon();
+    int hp1 = player1.getCon() + 50;
+    int hp2 = player2.getCon() + 50;
     int atk1 = player1.getStr() - player2.getDef();
     int atk2 = player2.getStr() - player1.getDef();
+
+    Serial.println(hp1);
+    Serial.println(hp2);
 
   //Serial.print(player1.getStr() - player2.getDef());
   while (hp1 > 0 || hp2 > 0) {
 
     //kattoo onko jommankumman critti true, eli tekee crit dmg, ja joka kierros kattoo uudelleen.
-    bool crit1 = random(0,19) > player1.getAgi();
+    bool crit1 = (random(0,19) > player1.getAgi());
+    //Serial.println(crit1);
     bool crit2 = random(0,19) > player2.getAgi();
+    //Serial.println(crit2);
 
     // ykköspelaajan hyökkäys crit tai ilman
     if (crit1 == true) {
@@ -179,10 +184,10 @@ void loop() {
 
 
     if (hp1 <= 0) {
-    Serial.print("player2 win");
+    Serial.println("player2 win");
     }
     else if  (hp2 <= 0) {
-    Serial.print("player1 win");
+    Serial.println("player1 win");
     };
 
 
