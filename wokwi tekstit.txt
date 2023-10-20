@@ -149,32 +149,57 @@ void loop() {
     int atk1 = player1.getStr() - player2.getDef();
     int atk2 = player2.getStr() - player1.getDef();
 
-    Serial.println(hp1);
-    Serial.println(hp2);
+    //Serial.println(hp1);
+    //Serial.println(hp2);
+
+    //hahmojen statsi printti
+    Serial.println();
+    Serial.println("=== Hahmo 1 ===");
+    Serial.println("---------------");
+    Serial.println("HP on: " + hp1);
+    Serial.println("---------------");
+    Serial.println("Strengi on: " + player1.getStr());
+    Serial.println("---------------");
+    Serial.println("Deffa on: " + player1.getDef());
+    Serial.println("---------------");
+    Serial.println("Agi on: " + player1.getAgi());
+    Serial.println("---------------");
+    Serial.println();
+    Serial.println();
+    Serial.println("=== Hahmo 2 ===");
+    Serial.println("---------------");
+    Serial.println("HP on: " + hp2);
+    Serial.println("---------------");
+    Serial.println("Strengi on: " + player2.getStr());
+    Serial.println("---------------");
+    Serial.println("Deffa on: " + player2.getDef());
+    Serial.println("---------------");
+    Serial.println("Agi on: " + player2.getAgi());
+    Serial.println("---------------");
 
   //Serial.print(player1.getStr() - player2.getDef());
   while (hp1 > 0 || hp2 > 0) {
 
     //kattoo onko jommankumman critti true, eli tekee crit dmg, ja joka kierros kattoo uudelleen.
-    bool crit1 = (random(0,19) > player1.getAgi());
+    //bool crit1 = (random(0,19) > player1.getAgi());
     //Serial.println(crit1);
-    bool crit2 = random(0,19) > player2.getAgi();
+    //bool crit2 = random(0,19) > player2.getAgi();
     //Serial.println(crit2);
 
     // ykköspelaajan hyökkäys crit tai ilman
-    if (crit1 == true) {
+    if (random(0,19) > player1.getAgi()) {          // pitäis ottaa random luku 0-18 ja verrata sitä hahmon agi, eli critti chance
         hp2 = (atk1 * 1.5) - hp2;
         Serial.println("pelaaja 1 crittas!");
-    } else if (crit2 == false) {
+    } else  {   
       hp2 = atk1 - hp2;
         Serial.println("pelaaja 1 normi hyökkäys!");
     }
 
     // kakkospelaajan hyökkäys crit tai ilman
-    if (crit2 == true) {
+    if (random(0,19) > player2.getAgi()) {          // pitäis ottaa random luku 0-18 ja verrata sitä hahmon agi, eli critti chance
         hp1 = (atk2 * 1.5) - hp1;
             Serial.println("pelaaja 2 crittas!");
-    } else if (crit2 == false) {
+    } else {
       hp1 = atk2 - hp1;
             Serial.println("pelaaja 2 normi hyökkäys!");
     }  
