@@ -68,6 +68,10 @@ void setup()
   display.setCursor(140, 200);
   display.setFont(maxfmono);
   display.println("DATA DUELIST");
+
+  display.setCursor(300, 300);
+  display.setFont(smallfmono);
+  display.println("Tekijät: Jonas & Aku");
   
   
 
@@ -93,25 +97,4 @@ void setup()
 void loop()
 {
 
-}
-
-void print_face() {
-  display.println(
-  ".------\ /------.\n"
-   "|       -       |\n"
-   "|               |\n"
-   "|               |\n"
-   "|               |\n"
-"_______________________\n"
-"===========.===========\n"
-  "/ ~~~~~     ~~~~~ \\\n"
- "/|     |     |\\\n"
-" W   ---  / \\  ---   W\n"
- "\\      |o o|      /\n"
-  "|                 |\n"
-  "\\    #########    /\n"
-   "\\  ## ----- ##  /\n"
-    "\\##         ##/\n"
-     "\\_____v_____/\n"
-  );
 }
