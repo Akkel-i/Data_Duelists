@@ -2,7 +2,17 @@
 
 IMAGE COMPRESS: https://lvgl.io/tools/imageconverter
 
-pin order: https://www.industrialshields.com/blog/arduino-industrial-1/how-to-connect-7-5-e-paper-display-esp32-320
+pin order e-paper: https://www.industrialshields.com/blog/arduino-industrial-1/how-to-connect-7-5-e-paper-display-esp32-320
+
+pin order nfc: https://esp32io.com/tutorials/esp32-rfid-nfc
+
+eps32 mapping: https://randomnerdtutorials.com/esp32-pinout-reference-gpios/
+
+G18 shared pin
+G23 Shared pin
+G5 shared pin
+3.3v shared pin
+
 
 
 
@@ -32,3 +42,7 @@ agi = 80% crit chance
     agi1 = player1.getAgi()
     def1 = player1.getDef()
     
+
+    # Box
+    https://www.thingiverse.com/thing:4204655
+
