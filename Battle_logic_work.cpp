@@ -275,7 +275,7 @@ String convertUID(const String& uid) {
             // Handle invalid characters here (if needed)
             // For now, we'll set the value to 0 for any invalid character
         }
-        value = constrain(value, 0, 9); // Max 9 !!!!!!! koska array pitää olla tietty, jos 2 lukua tulee niin array kusee ;_;
+        value = constrain(value, 0, 9);
         Serial.println(value);
         result += String(value);
     }
