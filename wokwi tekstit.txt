@@ -19,7 +19,7 @@ String convertedNFC2;
 int arrayNFC1[4];
 int arrayNFC2[4];
 bool playersCreated = false;
-
+bool gameWon = false;
 
 
 void setup() {
@@ -38,7 +38,7 @@ void setup() {
 // hahmon luonti
 class CreatePlayer {
 public:
-  // Constructor to initialize the variables
+  // Constructor to initialize the variables int winValue, int lossValue
   CreatePlayer(String nameValue, int strValue, int defValue, int agiValue, int conValue, int winValue, int lossValue) {
     name = nameValue;
     str = strValue;
@@ -141,44 +141,59 @@ void loop() {
 
     // statseja haetaan komennolla: player1.getDef()
     Serial.println("hahmot luotu ja ");
-    Serial.println("player1 deffa on: " +  String(player1.getDef()) + " ja player2 constitution on: " +  String(player2.getCon()) + " Pelaajan1 nimi on: " + player1.getName());
+    //Serial.println("player1 deffa on: " +  String(player1.getDef()) + " ja player2 constitution on: " +  String(player2.getCon()) + " Pelaajan1 nimi on: " + player1.getName());
   
   if (NFC1.length() != 0 && NFC2.length() != 0) {
     int hp1 = player1.getCon() + 50;
     int hp2 = player2.getCon() + 50;
+    int str1 = player1.getStr();
+    int str2 = player2.getStr();
+    int def1 = player1.getDef();
+    int def2 = player2.getDef();
+    int agi1 = player1.getAgi();
+    int agi2 = player2.getAgi();
     int atk1 = player1.getStr() - player2.getDef();
     int atk2 = player2.getStr() - player1.getDef();
-
-    //Serial.println(hp1);
-    //Serial.println(hp2);
-
-    //hahmojen statsi printti
+    int hit = random(1,7);
+    if (atk1 < 0){
+        atk1 = 1;
+    };
+    if (atk2 < 0){
+        atk2 = 1;
+    };
     Serial.println();
     Serial.println("=== Hahmo 1 ===");
     Serial.println("---------------");
-    Serial.println("HP on: " + hp1);
+    Serial.println("HP on: " + String(hp1));
     Serial.println("---------------");
-    Serial.println("Strengi on: " + player1.getStr());
+    Serial.println("Strengi on: " + String(str1));
     Serial.println("---------------");
-    Serial.println("Deffa on: " + player1.getDef());
+    Serial.println("Deffa on: " + String(def1));
     Serial.println("---------------");
-    Serial.println("Agi on: " + player1.getAgi());
+    Serial.println("Agi on: " + String(agi1));
     Serial.println("---------------");
     Serial.println();
     Serial.println();
     Serial.println("=== Hahmo 2 ===");
     Serial.println("---------------");
-    Serial.println("HP on: " + hp2);
+    Serial.println("HP on: " + String(hp2));
     Serial.println("---------------");
-    Serial.println("Strengi on: " + player2.getStr());
+    Serial.println("Strengi on: " + String(atk1));
     Serial.println("---------------");
-    Serial.println("Deffa on: " + player2.getDef());
+    Serial.println("Deffa on: " + String(def2));
     Serial.println("---------------");
-    Serial.println("Agi on: " + player2.getAgi());
+    Serial.println("Agi on: " + String(agi2));
     Serial.println("---------------");
+    Serial.flush();
+    //Serial.println(hp1);
+    //Serial.println(hp2);
+
+    //hahmojen statsi printti
+
 
   //Serial.print(player1.getStr() - player2.getDef());
-  while (hp1 >= 0 || hp2 >= 0) {
+  while (gameWon == false) {
+
 
     //kattoo onko jommankumman critti true, eli tekee crit dmg, ja joka kierros kattoo uudelleen.
     //bool crit1 = (random(0,19) > player1.getAgi());
@@ -187,32 +202,34 @@ void loop() {
     //Serial.println(crit2);
 
     // ykköspelaajan hyökkäys crit tai ilman
-    if (random(0,19) > player1.getAgi()) {          // pitäis ottaa random luku 0-18 ja verrata sitä hahmon agi, eli critti chance
-        hp2 = (atk1 * 1.5) - hp2;
-        Serial.println("pelaaja 1 crittas!");
+    if (random(0,19) > agi1) {          // pitäis ottaa random luku 0-18 ja verrata sitä hahmon agi, eli critti chance
+        hp2 = hp2 - ((hit + atk1) * 1.5);
+        Serial.println("pelaaja 1 crittas!" + String(atk1 * 1.5) + " damage");
     } else  {   
-      hp2 = atk1 - hp2;
-        Serial.println("pelaaja 1 normi hyökkäys!");
+      hp2 = hp2 - (hit + atk1);
+        Serial.println("pelaaja 1 normi hyökkäys!" + String(atk1) + " damage");
     }
 
     // kakkospelaajan hyökkäys crit tai ilman
-    if (random(0,19) > player2.getAgi()) {          // pitäis ottaa random luku 0-18 ja verrata sitä hahmon agi, eli critti chance
-        hp1 = (atk2 * 1.5) - hp1;
-            Serial.println("pelaaja 2 crittas!");
+    if (random(0,19) > agi2) {          // pitäis ottaa random luku 0-18 ja verrata sitä hahmon agi, eli critti chance
+        hp1 = hp1 - ((hit + atk2) * 1.5);
+            Serial.println("pelaaja 2 crittas! " + String(atk2 * 1.5) + " damage");
     } else {
-      hp1 = atk2 - hp1;
-            Serial.println("pelaaja 2 normi hyökkäys!");
+      hp1 = hp1 - (hit + atk2);
+            Serial.println("pelaaja 2 normi hyökkäys!" + String(atk2) + " damage");
     }  
 
-    Serial.println("pelaajan 1 hp on: " + hp1);
-    Serial.println("pelaajan 2 hp on: " + hp2);
+    Serial.println("pelaajan 1 hp on: " + String(hp1));
+    Serial.println("pelaajan 2 hp on: " + String(hp2));
 
 
     if (hp1 <= 0) {
     Serial.println("player2 win");
+    gameWon = true;
     }
     else if  (hp2 <= 0) {
     Serial.println("player1 win");
+    gameWon = true;
     };
 
 
