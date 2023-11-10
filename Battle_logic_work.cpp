@@ -21,11 +21,16 @@ int arrayNFC2[4];
 bool playersCreated = false;
 bool gameWon = false;
 
+const int buttonPin = 35; // Pin connected to the button
+
 
 void setup() {
   Serial.begin(9600);
   SPI.begin(); // init SPI bus
 
+  pinMode(buttonPin, INPUT);
+  // Enable internal pull-up resistor for the button
+  digitalWrite(buttonPin, HIGH);
   
   // initialize EEPROM with predefined size
   EEPROM.begin(EEPROM_SIZE);
@@ -90,6 +95,16 @@ private:
 void loop() { 
   NFC1 = "a45g9376";
   NFC2 = "e58aeb57";
+
+  int buttonState = digitalRead(buttonPin); // lukee buttonin tilan
+
+  // Check if the button is pressed
+  if (buttonState == LOW) {
+    //tämä toteutuu kun nappia painetaan
+    NFC1 = "";
+    NFC2 = "";
+    gameWon = false;
+  };
 
 
 
@@ -203,7 +218,7 @@ void loop() {
     //Serial.println(crit2);
 
     // ykköspelaajan hyökkäys crit tai ilman
-    if (random(1,21) <= agi1) {          // pitäis ottaa random luku 0-18 ja verrata sitä hahmon agi, eli critti chance
+    if (random(1,21) <= agi1) {          // pitäis ottaa random luku 0-20 ja verrata sitä hahmon agi, eli critti chance
         hp2 = hp2 - ((hit1 + atk1) * 1.5);
         Serial.println("pelaaja 1 crittas!" + String((hit1 + atk1) * 1.5) + " damage");
     } else  {   
@@ -212,7 +227,7 @@ void loop() {
     }
 
     // kakkospelaajan hyökkäys crit tai ilman
-    if (random(1,21) <= agi2) {          // pitäis ottaa random luku 0-18 ja verrata sitä hahmon agi, eli critti chance
+    if (random(1,21) <= agi2) {          // pitäis ottaa random luku 0-20 ja verrata sitä hahmon agi, eli critti chance
         hp1 = hp1 - ((hit2 + atk2) * 1.5);
             Serial.println("pelaaja 2 crittas! " + String((hit2 + atk2) * 1.5) + " damage");
     } else {
