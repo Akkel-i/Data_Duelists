@@ -1,4 +1,4 @@
-/*
+ /*
  * liitäntäkaaviot: https://esp32io.com/tutorials/esp32-rfid-nfc
  */
 
@@ -15,6 +15,7 @@
 #include <Fonts/FreeMonoBold12pt7b.h>
 #include <Fonts/FreeMonoBold18pt7b.h>
 #include <Fonts/FreeMonoBold24pt7b.h>
+#include <ezButton.h>
 
 #define SS_PIN  5  // ESP32 pin GPIO5 
 #define RST_PIN 27 // ESP32 pin GPIO27 
@@ -42,7 +43,9 @@ int arrayNFC2[4];
 bool playersCreated = false;
 bool gameWon = false;
 
-const int buttonPin = 35; // Pin connected to the button
+const int buttonPin = 13; // Pin connected to the button
+ezButton button(buttonPin);
+
 
 MFRC522 rfid(SS_PIN, RST_PIN);
 
@@ -51,9 +54,8 @@ void setup() {
   SPI.begin(); // init SPI bus
   rfid.PCD_Init(); // init MFRC522
 
-  pinMode(buttonPin, INPUT);
-  // Enable internal pull-up resistor for the button
-  digitalWrite(buttonPin, HIGH);
+
+  button.setDebounceTime(50); // set debounce time to 100 milliseconds 
   
   // initialize EEPROM with predefined size
   EEPROM.begin(EEPROM_SIZE);
@@ -141,17 +143,21 @@ private:
 
 
 void loop() { 
-  //NFC1 = "";
-  //NFC2 = "";
-  int buttonState = digitalRead(buttonPin); // lukee buttonin tilan
 
-  // Check if the button is pressed
-  if (buttonState == HIGH) {
-    //tämä toteutuu kun nappia painetaan
+  button.loop(); // MUST call the loop() function first
+
+  int btnState = button.getState();
+  Serial.println(btnState);
+  
+  if(btnState == 0){
+    Serial.println("The button is pressed");
     NFC1 = "";
     NFC2 = "";
     gameWon = false;
   };
+  // TOIMIIIII!!!!!
+
+
 
   Scanned_value_NFC = "";
   // lukee nfc funktiolla ja tallentaa arvoon
@@ -304,7 +310,7 @@ void loop() {
     Serial.println("player2 win");
     gameWon = true;
 
-    display.setCursor(400, 400);
+    display.setCursor(350, 350);
     display.setFont(smallfmono);
     display.println("player2 win");
     display.update();
@@ -313,16 +319,16 @@ void loop() {
     Serial.println("player1 win");
     gameWon = true;
 
-    display.setCursor(400, 400);
+    display.setCursor(350, 350);
     display.setFont(smallfmono);
     display.println("player1 win");
     display.update();
     };
 
 
-  }
+  };
 
-  }
+  };
 
 
 
