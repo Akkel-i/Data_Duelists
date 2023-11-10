@@ -40,6 +40,9 @@ String convertedNFC2;
 int arrayNFC1[4];
 int arrayNFC2[4];
 bool playersCreated = false;
+bool gameWon = false;
+
+const int buttonPin = 35; // Pin connected to the button
 
 MFRC522 rfid(SS_PIN, RST_PIN);
 
@@ -47,6 +50,10 @@ void setup() {
   Serial.begin(9600);
   SPI.begin(); // init SPI bus
   rfid.PCD_Init(); // init MFRC522
+
+  pinMode(buttonPin, INPUT);
+  // Enable internal pull-up resistor for the button
+  digitalWrite(buttonPin, HIGH);
   
   // initialize EEPROM with predefined size
   EEPROM.begin(EEPROM_SIZE);
@@ -136,6 +143,16 @@ private:
 void loop() { 
   //NFC1 = "";
   //NFC2 = "";
+  int buttonState = digitalRead(buttonPin); // lukee buttonin tilan
+
+  // Check if the button is pressed
+  if (buttonState == HIGH) {
+    //tämä toteutuu kun nappia painetaan
+    NFC1 = "";
+    NFC2 = "";
+    gameWon = false;
+  };
+
   Scanned_value_NFC = "";
   // lukee nfc funktiolla ja tallentaa arvoon
   Scanned_value_NFC = read_NFC();
@@ -202,7 +219,113 @@ void loop() {
     Serial.println("hahmot luotu ja ");
     Serial.println("player1 deffa on: " +  String(player1.getDef()) + " ja player2 constitution on: " +  String(player2.getCon()) + " Pelaajan1 nimi on: " + player1.getName());
   
-  
+
+    //tästä alkaa battle
+    if (NFC1.length() != 0 && NFC2.length() != 0) {
+    int hp1 = player1.getCon() + 50;
+    int hp2 = player2.getCon() + 50;
+    int str1 = player1.getStr();
+    int str2 = player2.getStr();
+    int def1 = player1.getDef();
+    int def2 = player2.getDef();
+    int agi1 = player1.getAgi();
+    int agi2 = player2.getAgi();
+    int atk1 = str1 - def2;
+    int atk2 = str2 - def1;
+    
+    if (atk1 < 0){
+        atk1 = 1;
+    };
+    if (atk2 < 0){
+        atk2 = 1;
+    };
+    Serial.println();
+    Serial.println("=== Hahmo 1 ===");
+    Serial.println("---------------");
+    Serial.println("HP on: " + String(hp1));
+    Serial.println("---------------");
+    Serial.println("Strengi on: " + String(str1));
+    Serial.println("---------------");
+    Serial.println("Deffa on: " + String(def1));
+    Serial.println("---------------");
+    Serial.println("Agi on: " + String(agi1));
+    Serial.println("---------------");
+    Serial.println();
+    Serial.println();
+    Serial.println("=== Hahmo 2 ===");
+    Serial.println("---------------");
+    Serial.println("HP on: " + String(hp2));
+    Serial.println("---------------");
+    Serial.println("Strengi on: " + String(str2));
+    Serial.println("---------------");
+    Serial.println("Deffa on: " + String(def2));
+    Serial.println("---------------");
+    Serial.println("Agi on: " + String(agi2));
+    Serial.println("---------------");
+    Serial.flush();
+
+    //hahmojen statsi printti
+
+
+  //Serial.print(player1.getStr() - player2.getDef());
+  while (gameWon == false) {
+      int hit1 = random(1,7);
+      int hit2 = random(1,7);
+      
+    //kattoo onko jommankumman critti true, eli tekee crit dmg, ja joka kierros kattoo uudelleen.
+    //bool crit1 = (random(0,19) > player1.getAgi());
+    //Serial.println(crit1);
+    //bool crit2 = random(0,19) > player2.getAgi();
+    //Serial.println(crit2);
+
+    // ykköspelaajan hyökkäys crit tai ilman
+    if (random(1,21) <= agi1) {          // pitäis ottaa random luku 0-20 ja verrata sitä hahmon agi, eli critti chance
+        hp2 = hp2 - ((hit1 + atk1) * 1.5);
+        Serial.println("pelaaja 1 crittas!" + String((hit1 + atk1) * 1.5) + " damage");
+    } else  {   
+      hp2 = hp2 - (hit1 + atk1);
+        Serial.println("pelaaja 1 normi hyökkäys!" + String(atk1 + hit1) + " damage");
+    }
+
+    // kakkospelaajan hyökkäys crit tai ilman
+    if (random(1,21) <= agi2) {          // pitäis ottaa random luku 0-20 ja verrata sitä hahmon agi, eli critti chance
+        hp1 = hp1 - ((hit2 + atk2) * 1.5);
+            Serial.println("pelaaja 2 crittas! " + String((hit2 + atk2) * 1.5) + " damage");
+    } else {
+      hp1 = hp1 - (hit2 + atk2);
+            Serial.println("pelaaja 2 normi hyökkäys!" + String(hit2 + atk2) + " damage");
+    }  
+
+    Serial.println("pelaajan 1 hp on: " + String(hp1));
+    Serial.println("pelaajan 2 hp on: " + String(hp2));
+
+
+    if (hp1 <= 0) {
+    Serial.println("player2 win");
+    gameWon = true;
+
+    display.setCursor(400, 400);
+    display.setFont(smallfmono);
+    display.println("player2 win");
+    display.update();
+    }
+    else if  (hp2 <= 0) {
+    Serial.println("player1 win");
+    gameWon = true;
+
+    display.setCursor(400, 400);
+    display.setFont(smallfmono);
+    display.println("player1 win");
+    display.update();
+    };
+
+
+  }
+
+  }
+
+
+
   delay(2000); // odottaa 2 sekuntia
 }
 
