@@ -434,6 +434,32 @@ String getFromMemory() {
 
 
 
+
+
+// TESTIÄ ALLA; EI VIELÄ TOIMI; MIETINTÄÄ MITEN TALLENNUS VOISI TOIMIA KUNNOLLA
+
+
+  // Save data with the provided identifier to EEPROM
+  // myIdentifier olisi UID
+  //saveDataToEEPROM(myIdentifier);
+
+
+/*
+  void saveDataToEEPROM(const String &identifier) {
+  // Example usage of saving data with identifier to EEPROM
+  // Create an instance of the Data struct
+  Data dataToSave;
+
+  // Assign the identifier
+  dataToSave.identifier = identifier;
+
+  // Save the data to EEPROM using one of the functions
+  // Choose which function you want to use to save the data
+  // For example, using the function to increment the first int
+  saveToMemoryLoss(dataToSave.identifier);
+}
+*/
+
 struct Data {
   String identifier;
   int value1;
