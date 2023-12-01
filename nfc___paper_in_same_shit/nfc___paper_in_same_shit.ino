@@ -144,6 +144,8 @@ private:
 
 void loop() { 
 
+while (gameWon == true) {
+
   button.loop(); // MUST call the loop() function first
 
   int btnState = button.getState();
@@ -154,9 +156,17 @@ void loop() {
     NFC1 = "";
     NFC2 = "";
     gameWon = false;
+
+    display.fillScreen(GxEPD_WHITE);
+    display.setCursor(140, 200);
+    display.setFont(maxfmono);
+    display.println("DATA DUELIST");
+     display.update();
   };
   // TOIMIIIII!!!!!
+  Serial.println("odottaa napin painallusta");
 
+};
 
 
   Scanned_value_NFC = "";
@@ -310,19 +320,13 @@ void loop() {
     Serial.println("player2 win");
     gameWon = true;
 
-    display.setCursor(350, 350);
-    display.setFont(smallfmono);
-    display.println("player2 win");
-    display.update();
+    printWinnerToScreen("player2");
     }
     else if  (hp2 <= 0) {
     Serial.println("player1 win");
     gameWon = true;
 
-    display.setCursor(350, 350);
-    display.setFont(smallfmono);
-    display.println("player1 win");
-    display.update();
+    printWinnerToScreen("player1");
     };
 
 
@@ -416,6 +420,16 @@ void createStats(const String& input, int resultArray[4]) {
         // Handle the case when the input length is not even (if needed)
         // You can set the resultArray to an error state here if required
     }
+}
+
+
+void printWinnerToScreen(String winner) {
+
+    display.fillScreen(GxEPD_WHITE);
+    display.setCursor(140, 200);
+    display.setFont(maxfmono);
+    display.println(winner +  " WINS!!");
+    display.update();
 }
 
 
