@@ -81,6 +81,11 @@ void setup() {
   display.setCursor(60, 90);
   //print_face(); saa piirrettyä naaman
 
+
+  display.setCursor(300, 30);
+  display.setFont(smallfmono);
+  display.println("Scan two NFC tags");
+
   display.setCursor(140, 200);
   display.setFont(maxfmono);
   display.println("DATA DUELIST");
@@ -89,7 +94,7 @@ void setup() {
   display.setFont(smallfmono);
   display.println("with UFC");
 
-    display.setCursor(350, 350);
+    display.setCursor(330, 330);
   display.setFont(smallfmono);
   display.println("copyright Jonas & Aku");
 
@@ -154,6 +159,7 @@ void loop() {
 
 // tää ledi on perus ready
   digitalWrite(ledPin1, HIGH);
+  
 
 while (gameWon == true) {
 
