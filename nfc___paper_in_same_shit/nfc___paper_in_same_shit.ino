@@ -46,6 +46,8 @@ bool gameWon = false;
 const int buttonPin = 13; // Pin connected to the button
 ezButton button(buttonPin);
 
+const int ledPin1 = 2; // GPIO 4 (G4) for first LED
+const int ledPin2 = 15; // GPIO 0 (G0) for second LED
 
 MFRC522 rfid(SS_PIN, RST_PIN);
 
@@ -54,6 +56,8 @@ void setup() {
   SPI.begin(); // init SPI bus
   rfid.PCD_Init(); // init MFRC522
 
+  pinMode(ledPin1, OUTPUT);
+  pinMode(ledPin2, OUTPUT);
 
   button.setDebounceTime(50); // set debounce time to 100 milliseconds 
   
@@ -144,12 +148,18 @@ private:
 
 void loop() { 
 
+// tää ledi on perus ready
+  digitalWrite(ledPin1, HIGH);
+
 while (gameWon == true) {
 
   button.loop(); // MUST call the loop() function first
 
   int btnState = button.getState();
   Serial.println(btnState);
+  Serial.println("odottaa napin painallusta");
+    digitalWrite(ledPin2, HIGH);
+      digitalWrite(ledPin1, LOW); // Turn off the first LED
   
   if(btnState == 0){
     Serial.println("The button is pressed");
@@ -161,10 +171,11 @@ while (gameWon == true) {
     display.setCursor(140, 200);
     display.setFont(maxfmono);
     display.println("DATA DUELIST");
-     display.update();
+    display.update();
+    digitalWrite(ledPin2, LOW); // Turn off the second LED
   };
   // TOIMIIIII!!!!!
-  Serial.println("odottaa napin painallusta");
+
 
 };
 
@@ -234,10 +245,12 @@ while (gameWon == true) {
     // statseja haetaan komennolla: player1.getDef()
     Serial.println("hahmot luotu ja ");
     Serial.println("player1 deffa on: " +  String(player1.getDef()) + " ja player2 constitution on: " +  String(player2.getCon()) + " Pelaajan1 nimi on: " + player1.getName());
-  
+
+ 
 
     //tästä alkaa battle
     if (NFC1.length() != 0 && NFC2.length() != 0) {
+      digitalWrite(ledPin1, LOW); // Turn off the first LED
     int hp1 = player1.getCon() + 50;
     int hp2 = player2.getCon() + 50;
     int str1 = player1.getStr();
@@ -315,6 +328,16 @@ while (gameWon == true) {
     Serial.println("pelaajan 1 hp on: " + String(hp1));
     Serial.println("pelaajan 2 hp on: " + String(hp2));
 
+  digitalWrite(ledPin1, HIGH);
+  delay(500); // Keep the LED on for 1 second
+     digitalWrite(ledPin2, HIGH);
+  digitalWrite(ledPin1, LOW); // Turn off the first LED
+
+  delay(500); // Keep the LED on for 1 second
+  digitalWrite(ledPin2, LOW); // Turn off the second LED
+
+  digitalWrite(ledPin1, HIGH);
+     digitalWrite(ledPin2, HIGH);
 
     if (hp1 <= 0) {
     Serial.println("player2 win");
