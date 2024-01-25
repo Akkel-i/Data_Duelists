@@ -4,9 +4,9 @@
 
 #define DHTPIN 4 
 
-const char* ssid = "Spottaa kissa";
-const char* password = "ripuli123";
-const char* serverURL = "http://www.hh3dlab.fi/farmdata/receive.php"; // URL to your PHP file
+const char* ssid = "OnePlus 8T";
+const char* password = "w9vfcqrm";
+const char* serverURL = "http://www.hh3dlab.fi/dataduelist/iotwrite.php"; // URL to your PHP file
 #define DHTTYPE DHT11   // DHT 21 (AM2301)
 
 DHT dht(DHTPIN, DHTTYPE);
@@ -25,9 +25,9 @@ void setup() {
 }
 
 void loop() {
-    float temperature = readTemperature(); // Replace with your temperature reading logic
-    String deviceName = "Vessatiimi"; // Replace with your team name
-    String postData = "temperature=" + String(temperature) + "&device=" + deviceName;
+    String deviceName = "DATA DUELIST"; // Replace with your team name
+    //String postData = "temperature=" + String(temperature) + "&device=" + deviceName;
+    String postData = "MOIKKULIIIIIIIII";
 
 
 
@@ -45,11 +45,4 @@ void loop() {
 
     http.end();
     delay(10000); // Send data every tem seconds (adjust as needed)
-}
-
-float readTemperature() {
-      float t = dht.readTemperature();
-    // Implement your temperature sensor reading code here
-    // Replace this with your sensor library or logic
-    return t; // Dummy value
 }
