@@ -1,32 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XMLHttpRequest Esimerkki</title>
+    <title>Lue tiedosto</title>
 </head>
-
 <body>
-    <div id="txt-container"></div>
+
+    <h1>Tiedoston sisältö</h1>
+    <pre id="tiedosto-sisalto"></pre>
 
     <script>
-        // Käytetään fetch APIa tiedoston lataamiseen
-        fetch('luettavaa.txt')
+        // Tee HTTP GET -pyyntö
+        fetch('https://hh3dlab.fi/dataduelist/iotwrite.txt')
             .then(response => {
+                // Tarkista, onko pyyntö onnistunut
                 if (!response.ok) {
-                    throw new Error('Tiedoston lataaminen epäonnistui: ' + response.status);
+                    throw new Error('Network response was not ok');
                 }
+                // Palauta vastauksen tekstisisältö
                 return response.text();
             })
             .then(data => {
-                // Tiedoston sisältö on nyt saatavilla data-muuttujassa
-                document.getElementById("txt-container").innerHTML = data;
+                // Näytä tiedoston sisältö
+                document.getElementById('tiedosto-sisalto').textContent = data;
             })
             .catch(error => {
-                console.error('Virhe tiedoston lataamisessa:', error);
+                // Käsittele virheet
+                console.error('There was a problem with the fetch operation:', error);
             });
     </script>
-</body>
 
+</body>
 </html>

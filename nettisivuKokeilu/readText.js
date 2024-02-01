@@ -14,7 +14,7 @@ xmlhttp.onreadystatechange = function() {
 };
 
 // Määritellään HTTP-metodi ja tiedoston nimi
-xmlhttp.open("GET", "luettavaa.txt", true);
+xmlhttp.open("GET", "https://hh3dlab.fi/dataduelist/iotwrite.txt", true);
 
 // Lähetetään pyyntö
 xmlhttp.send();
