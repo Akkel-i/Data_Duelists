@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XMLHttpRequest Esimerkki</title>
+</head>
+
+<body>
+    <div id="txt-container"></div>
+
+    <script>
+        // Käytetään fetch APIa tiedoston lataamiseen
+        fetch('luettavaa.txt')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Tiedoston lataaminen epäonnistui: ' + response.status);
+                }
+                return response.text();
+            })
+            .then(data => {
+                // Tiedoston sisältö on nyt saatavilla data-muuttujassa
+                document.getElementById("txt-container").innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Virhe tiedoston lataamisessa:', error);
+            });
+    </script>
+</body>
+
+</html>
