@@ -1,21 +1,23 @@
 // Make a fetch request to retrieve the HTML content of another page
-fetch('http://hh3dlab.fi/dataduelist/iotwrite.txt')
-    .then(response => response.text())
-    .then(html => {
-        // Create a temporary container element
-        const tempContainer = document.createElement('div');
-        // Set the retrieved HTML as the innerHTML of the container
-        tempContainer.innerHTML = html;
+//('http://hh3dlab.fi/dataduelist/iotwrite.txt')
+    // Replace this URL with the actual URL of your .txt file
+    const url = "http://hh3dlab.fi/dataduelist/iotwrite.txt";
 
-        // Access the <body> element content
-        const bodyContent = tempContainer.querySelector('body').innerHTML;
-
-        // Now, you can use the bodyContent as needed
-        console.log(bodyContent);
-    })
-    .catch(error => console.error('Error fetching the page:', error));
-
-
+    // Fetch the content of the file
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.text();
+        })
+        .then(fileContent => {
+            // Display the content on the webpage
+            document.getElementById("fileContent").innerText = fileContent;
+        })
+        .catch(error => {
+            console.error('Error fetching the file:', error);
+        });
 
 /*     JSONP (JSON with Padding):
 JSONP is a technique for overcoming the same-origin policy limitations. It involves injecting a <script> tag into the page, and the server responds with a JSON object wrapped in a function call. This technique is limited to supporting only GET requests.
