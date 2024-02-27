@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ajax-esimerkki</title>
+    <script type="text/javascript">
+
+        const originalUrl = 'https://hh3dlab.fi/dataduelist/iotwrite.txt';
+        const corsAnywhereUrl = 'https://cors-anywhere.herokuapp.com/' + originalUrl;
+
+        function loadDoc() {
+            fetch(corsAnywhereUrl)
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data); // Käsittele vastaus täällä
+                })
+                .catch(error => {
+                    console.error('Virhe:', error);
+                });
+        }
+    </script>
+</head>
+
+<body>
+    <div id="demo">
+        <h2>Anna Ajaxin muuttaa tätä tekstiä</h2>
+        <button type="button" onclick="loadDoc()">Muuta sisältöä</button>
+    </div>
+</body>
+
+</html>
+
+
+<!-- xhttp.open("GET", "https://hh3dlab.fi/dataduelist/iotwrite.txt", true); -->
+
+<!-- const originalUrl = 'https://hh3dlab.fi/dataduelist/iotwrite.txt';
+const corsAnywhereUrl = 'https://cors-anywhere.herokuapp.com/' + originalUrl;
+
+fetch(corsAnywhereUrl)
+.then(response => response.text())
+.then(data => {
+console.log(data); // Käsittele vastaus täällä
+})
+.catch(error => {
+console.error('Virhe:', error);
+}); -->
