@@ -13,7 +13,8 @@ G23 Shared pin
 G5 shared pin
 3.3v shared pin
 
-
+Arduino GM extension: https://forum.gamemaker.io/index.php?threads/arduino-dll.888/
+with cheatsheet: https://yal.cc/docs/gm/arduino/
 
 
 # nice to have
