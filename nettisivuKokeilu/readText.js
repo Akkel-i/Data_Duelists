@@ -1,5 +1,5 @@
 // Make a fetch request to retrieve the HTML content of another page
-fetch('http://hh3dlab.fi/dataduelist/iotwrite.txt')
+fetch('https://hh3dlab.fi/dataduelist/iotwrite.txt')
     .then(response => response.text())
     .then(html => {
         // Create a temporary container element
