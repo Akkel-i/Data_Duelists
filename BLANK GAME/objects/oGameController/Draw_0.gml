@@ -3,27 +3,8 @@
 ////draw_self()
 ////draw_text(100,100, string_digits(readString))
 
-//var playerStats = arduino_read_line_new(1)
-//show_debug_message(playerStats)
+	
 
-	//if(arduino_connected())
-	//{
-	//	var recievedData = arduino_read_line_new(arduinoIndex)
-	//	show_debug_message("Received: " + recievedData)
-	//}
-	
-//var arduinoIndex = arduino_create("COM3", 115200);
-	
-//		if(arduino_connected(arduinoIndex))
-//	{
-//		show_debug_message("jee")
-//	}
-	
-//	else
-//	{ 
-//		show_debug_message("pöö")
-		
-//	}
 
 
 
@@ -31,7 +12,12 @@ if (global.arduinoIndex != -1)
 {
     //show_debug_message("Connected to COM3 at 115200 baud");
 	arduino_read(global.arduinoIndex, 10)
-    // Perform additional checks or operations if needed
+
+// testit mikä toimii
+arduino_read_line(global.arduinoIndex)​
+arduino_read_text(global.arduinoIndex, 100)​
+arduino_read_line_new(global.arduinoIndex)​
+// mikä näistä toimii
     
     // Close the connection
 	//if(arduino_connected())
