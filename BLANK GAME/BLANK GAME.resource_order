@@ -17,7 +17,11 @@
     {"name":"Timelines","order":8,"path":"folders/Timelines.yy",},
   ],
   "ResourceOrderSettings": [
-    {"name":"Sprite1","order":16,"path":"sprites/Sprite1/Sprite1.yy",},
+    {"name":"oPlayerObject","order":19,"path":"objects/oPlayerObject/oPlayerObject.yy",},
+    {"name":"sRead1","order":1,"path":"sprites/sRead1/sRead1.yy",},
+    {"name":"sRead2","order":2,"path":"sprites/sRead2/sRead2.yy",},
+    {"name":"Font1","order":17,"path":"fonts/Font1/Font1.yy",},
+    {"name":"Sprite4","order":18,"path":"sprites/Sprite4/Sprite4.yy",},
     {"name":"oGameController","order":1,"path":"objects/oGameController/oGameController.yy",},
   ],
 }

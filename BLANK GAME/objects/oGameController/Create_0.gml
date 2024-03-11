@@ -1,4 +1,4 @@
-global.arduinoIndex = arduino_create("COM3", 115200);
+global.arduinoIndex = arduino_create("COM3", 9600);
 
 if (global.arduinoIndex != -1)
 {
@@ -18,3 +18,13 @@ else
     show_debug_message("Failed to connect to COM3 at 115200 baud. Error code: " + string(arduinoIndex));
 }
 
+//if (global.NFC1 != "" && global.NFC2 != "")
+//{
+global.NFC1 = ""
+global.NFC2 = ""
+
+global.NFC1array = [];
+global.NFC2array = [];
+
+global.playersMade = false
+//}
