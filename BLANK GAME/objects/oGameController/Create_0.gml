@@ -27,4 +27,6 @@ global.NFC1array = [];
 global.NFC2array = [];
 
 global.playersMade = false
+
+global.creation = 1
 //}

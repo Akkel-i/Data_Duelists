@@ -36,6 +36,8 @@
     "IDEVersion": "2023.8.2.108",
   },
   "resources": [
+    {"id":{"name":"randomObject","path":"objects/randomObject/randomObject.yy",},},
+    {"id":{"name":"Sprite7","path":"sprites/Sprite7/Sprite7.yy",},},
     {"id":{"name":"oPlayerObject","path":"objects/oPlayerObject/oPlayerObject.yy",},},
     {"id":{"name":"sRead1","path":"sprites/sRead1/sRead1.yy",},},
     {"id":{"name":"oCreatePlayer","path":"objects/oCreatePlayer/oCreatePlayer.yy",},},
@@ -44,7 +46,10 @@
     {"id":{"name":"Sprite1","path":"sprites/Sprite1/Sprite1.yy",},},
     {"id":{"name":"Font1","path":"fonts/Font1/Font1.yy",},},
     {"id":{"name":"Sprite4","path":"sprites/Sprite4/Sprite4.yy",},},
+    {"id":{"name":"randomObject2","path":"objects/randomObject2/randomObject2.yy",},},
     {"id":{"name":"oGameController","path":"objects/oGameController/oGameController.yy",},},
+    {"id":{"name":"playerSprite1","path":"sprites/playerSprite1/playerSprite1.yy",},},
+    {"id":{"name":"playerSprite2","path":"sprites/playerSprite2/playerSprite2.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
   ],
   "RoomOrderNodes": [

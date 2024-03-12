@@ -17,11 +17,16 @@
     {"name":"Timelines","order":8,"path":"folders/Timelines.yy",},
   ],
   "ResourceOrderSettings": [
+    {"name":"randomObject","order":2,"path":"objects/randomObject/randomObject.yy",},
+    {"name":"Sprite7","order":23,"path":"sprites/Sprite7/Sprite7.yy",},
     {"name":"oPlayerObject","order":19,"path":"objects/oPlayerObject/oPlayerObject.yy",},
     {"name":"sRead1","order":1,"path":"sprites/sRead1/sRead1.yy",},
     {"name":"sRead2","order":2,"path":"sprites/sRead2/sRead2.yy",},
     {"name":"Font1","order":17,"path":"fonts/Font1/Font1.yy",},
     {"name":"Sprite4","order":18,"path":"sprites/Sprite4/Sprite4.yy",},
+    {"name":"randomObject2","order":3,"path":"objects/randomObject2/randomObject2.yy",},
     {"name":"oGameController","order":1,"path":"objects/oGameController/oGameController.yy",},
+    {"name":"playerSprite1","order":20,"path":"sprites/playerSprite1/playerSprite1.yy",},
+    {"name":"playerSprite2","order":3,"path":"sprites/playerSprite2/playerSprite2.yy",},
   ],
 }
