@@ -1,6 +1,9 @@
 //global.NFC1 = 49230523
 //global.NFC2 = 34389293
 //Perusluku homma
+
+
+	//show_debug_message("Aaaaaaaaaaaaaaaaaaa")
 if (global.arduinoIndex != -1)
 {
     var receiveData = "";
@@ -29,14 +32,14 @@ if (global.arduinoIndex != -1)
     global.NFC2 = lines[1];
 
     // Trim or truncate NFC1 to 8 characters
-    if (string_length(global.NFC1) != 8)
+    if (string_length(string_trim(global.NFC1)) != 8)
     {
         global.NFC1 = "43262363";
     }
 
 
     // Trim or truncate NFC2 to 8 characters
-    if (string_length(global.NFC2) != 8)
+    if (string_length(string_trim(global.NFC2)) != 8)
     {
         global.NFC2 = "54302154";
     }
@@ -77,48 +80,49 @@ for (var i = 0; i < 4; i++) {
 
 
 // Display the contents of the array for testing purposes
-for (var i = 0; i < 4; i++) {
-    show_debug_message("Sum " + string(i+1) + ": " + string(global.NFC1array[i]));
-}
-for (var i = 0; i < 4; i++) {
-    show_debug_message("Sum " + string(i+1) + ": " + string(global.NFC2array[i]));
-}
+//for (var i = 0; i < 4; i++) {
+//    show_debug_message("Sum " + string(i+1) + ": " + string(global.NFC1array[i]));
+//}
+//for (var i = 0; i < 4; i++) {
+//    show_debug_message("Sum " + string(i+1) + ": " + string(global.NFC2array[i]));
+//}
 }
 
-createPlayer = function (statsArray)
-{
-		if (global.creation = 1)
-		{
-			object_set_sprite(oPlayerObject,playerSprite1)
-			 global.posWid = 100 
-			 global.posHei = 100
-		}
+//createPlayer = function (statsArray)
+//{
+//		if (global.creation = 1)
+//		{
+//			object_set_sprite(oPlayerObject,playerSprite1)
+//			 global.posWid = 100 
+//			 global.posHei = 100
+//		}
 		
-		else
-		{
-		 object_set_sprite(oPlayerObject, playerSprite2)
-		  global.posWid = 200
-		  global.posHei = 100
-		}
-		object_set_sprite(oPlayerObject, playerSprite2)
-        // Create a new player instance or use an existing player object
-        var player = instance_create_layer(global.posWid, global.posHei,"Instances", oPlayerObject);
+//		else
+//		{
+//		 object_set_sprite(oPlayerObject, playerSprite2)
+//		  global.posWid = 200
+//		  global.posHei = 100
+//		}
+//		object_set_sprite(oPlayerObject, playerSprite2)
+//        // Create a new player instance or use an existing player object
+//        var player = instance_create_layer(global.posWid, global.posHei,"Instances", oPlayerObject);
 
-        // Assign stats to the player
-        player.hp = statsArray[0];
-        player.atk = statsArray[1];
-        player.def = statsArray[2];
-        player.agi = statsArray[3];
-
-        // Additional initialization or handling if needed
-        // ...
+//        // Assign stats to the player
+//        player.hp = statsArray[0] + 50;
+//        player.atk = statsArray[1];
+//        player.def = statsArray[2];
+//        player.agi = statsArray[3];
 		
 		
-		global.creation ++;
-        // Return the created player instance
-        return player;
+		
+//        // Additional initialization or handling if needed
+//        // ...
+		
+//		global.creation ++;
+//        // Return the created player instance
+//        return player;
 
-}
+//}
 populatePlayer = function (statsArray)
 {
 		var player
@@ -132,15 +136,20 @@ else
  player = randomObject2	
 }
         // Assign stats to the player
-        player.hp = statsArray[0];
-        player.atk = statsArray[1];
+        player.hp = statsArray[0] + 50;
+        player.str = statsArray[1];
         player.def = statsArray[2];
         player.agi = statsArray[3];
 
         // Additional initialization or handling if needed
         // ...
 		
+		player.atk = player.str - player.def;
 		
+		if (player.atk < 1 )
+		{
+			player.atk = 1;
+		}
         // Return the created player instance
         global.creation ++;
 		return player;
@@ -154,23 +163,83 @@ if (array_length(global.NFC1array) == 4 && array_length(global.NFC2array) == 4 &
      player1 = populatePlayer(global.NFC1array);
      player2 = populatePlayer(global.NFC2array);
 	
-	show_debug_message(player1.hp)
-	show_debug_message(player2.def)
+	//show_debug_message(player1.hp)
+	//show_debug_message(player2.def)
 	
 	global.playersMade = true
 
-    if (player2.str != "")
-    {
-        player2.direction = 180;  // Set the direction for movement
-        player2.speed = 2;       // Set the speed for movement
-    }
+    //if (player2.str != "")
+    //{
+    //    player2.direction = 180;  // Set the direction for movement
+    //    player2.speed = 2;       // Set the speed for movement
+    //}
 
     // Additional logic or handling if needed
     // ...
 }
-
-if (global.playersMade = true)
+battleTimer = function()
 {
-
-
+ var timer = 0;
+ while (timer <= 1600000)
+ {
+	 timer ++;
+	 //show_debug_message( timer);
+ }
 }
+if (global.playersMade == true && global.gameVisib == false)
+{
+	layer_set_visible("Instances_1", false)
+	layer_set_visible("Instances", true)
+	global.gameVisib = true;
+	battleTimer();
+}
+
+if (global.playersMade == true && global.gameOver == false && global.gameVisib == true)
+{
+    while (global.gameOver == false) {
+        var hit1 = random(6) + 1;
+        var hit2 = random(6) + 1;
+		
+      
+        if (random(21) <= randomObject.agi) {  // Check if randomObject's agility allows for a critical hit
+            randomObject2.hp = randomObject2.hp - ((hit1 + randomObject.atk) * 1.5);
+            show_debug_message("Player 1 critical hit! " + string((hit1 + randomObject.atk) * 1.5) + " damage");
+        } else  {   
+            randomObject2.hp = randomObject2.hp - (hit1 + randomObject.atk);
+            show_debug_message("Player 1 normal attack! " + string(randomObject.atk + hit1) + " damage");
+        }
+
+        if (random(21) <= randomObject2.agi) { // Check if randomObject2's agility allows for a critical hit
+            randomObject.hp = randomObject.hp - ((hit2 + randomObject2.atk) * 1.5);
+            show_debug_message("Player 2 critical hit! " + string((hit2 + randomObject2.atk) * 1.5) + " damage");
+        } else {
+            randomObject.hp = randomObject.hp - (hit2 + randomObject2.atk);
+            show_debug_message("Player 2 normal attack! " + string(hit2 + randomObject2.atk) + " damage");
+        }  
+
+    show_debug_message("pelaajan 1 hp on: " + string(randomObject.hp));
+    show_debug_message("pelaajan 2 hp on: " + string(randomObject2.hp));
+
+
+
+    if (randomObject.hp <= 0) {
+    show_debug_message("player2 win");
+	layer_set_visible("Winner2", true);
+     global.gameOver = true;
+	 
+	 //object_set_visible(randomObject,false)
+
+    }
+    else if  (randomObject2.hp <= 0) {
+    show_debug_message("player1 win");
+    
+	layer_set_visible("Winner1", true);
+	global.gameOver = true;
+	//object_set_visible(randomObject2,false)
+	
+    };
+	
+//battleTimer();
+  };
+}
+

@@ -29,4 +29,10 @@ global.NFC2array = [];
 global.playersMade = false
 
 global.creation = 1
+layer_set_visible("Winner1", false)
+layer_set_visible("Winner2", false)
+
+layer_set_visible("Instances", false)
+global.gameOver = false
+global.gameVisib = false
 //}
