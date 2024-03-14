@@ -191,7 +191,7 @@ if (global.playersMade == true && global.gameVisib == false)
 	layer_set_visible("Instances_1", false)
 	layer_set_visible("Instances", true)
 	global.gameVisib = true;
-	battleTimer();
+	//battleTimer();
 }
 
 if (global.playersMade == true && global.gameOver == false && global.gameVisib == true)
