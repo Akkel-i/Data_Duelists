@@ -1,5 +1,13 @@
 # Data_Duelists
 
+This collaboration project started as a IoT-project and turned into a arduino and esp32 NFC-tag game!
+
+We have plans to continue developing this, maybe transfer to android for wider audience.
+
+
+
+# Notes
+
 IMAGE COMPRESS: https://lvgl.io/tools/imageconverter
 
 pin order e-paper: https://www.industrialshields.com/blog/arduino-industrial-1/how-to-connect-7-5-e-paper-display-esp32-320
