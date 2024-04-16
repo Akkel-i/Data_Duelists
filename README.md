@@ -26,9 +26,9 @@ with cheatsheet: https://yal.cc/docs/gm/arduino/
 
 
 # nice to have
-Battle kuvat
-NFC nickname from random list 
-Stat save to memory - dictionary
-Leaderboard
-Android
+- Battle kuvat
+- NFC nickname from random list 
+- Stat save to memory - dictionary
+- Leaderboard
+- Android
     
