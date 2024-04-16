@@ -30,28 +30,5 @@ Battle kuvat
 NFC nickname from random list 
 Stat save to memory - dictionary
 Leaderboard
-
-
-100% // 150%
-agi = 80% crit chance
-
-    if (ats1 > ats2) {
-        int dmg = atk1 - def2;
-        hp2 -= dmg;
-         if (hp2 == 0){
-            return  
-         }
-            
-
-        ats1 -= 1;
-    }
-
-    hp1 = player1.getCon()
-    atk1 = player1.getAtk()
-    agi1 = player1.getAgi()
-    def1 = player1.getDef()
+Android
     
-
-    # Box
-    https://www.thingiverse.com/thing:4204655
-
